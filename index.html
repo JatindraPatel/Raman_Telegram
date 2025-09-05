@@ -4,19 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Raman Logo Page</title>
-  <!-- Font Awesome CDN -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* Background animation */
     body {
       margin: 0;
       padding: 0;
-      background-color: black;
-      color: gold;
       font-family: Arial, sans-serif;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      color: gold;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #000000);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* Navbar */
@@ -25,16 +35,30 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 20px;
-      background-color: #111;
+      background: rgba(0, 0, 0, 0.75);
+      border-bottom: 2px solid gold;
+      box-shadow: 0 0 15px gold;
+      animation: glow 3s infinite alternate;
+      z-index: 10;
+    }
+
+    .navbar h2 {
+      color: #ffdd57;
+      text-shadow: 2px 2px 5px black;
     }
 
     .menu-icon {
       font-size: 28px;
       cursor: pointer;
-      color: gold;
+      color: #ffdd57;
+      transition: transform 0.3s;
     }
 
-    /* Center content */
+    .menu-icon:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Content */
     .content {
       flex: 1;
       display: flex;
@@ -43,25 +67,40 @@
       align-items: center;
       text-align: center;
       padding: 20px;
+      position: relative;
+      z-index: 5;
     }
 
+    .info {
+      margin-bottom: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #ffeb3b;
+      white-space: pre-line;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Logo */
     .content img {
-      max-width: 250px;
+      max-width: 230px;
       width: 100%;
       height: auto;
       border-radius: 50%;
       margin-top: 20px;
+      box-shadow: 0px 0px 25px gold;
+      transition: transform 0.5s ease;
     }
 
-    /* Para styling */
-    .info {
-      margin-bottom: 20px;
-      color: gold;
-      font-size: 16px;
-      line-height: 1.6;
-      white-space: pre-line; /* formatting preserve */
+    .content img:hover {
+      transform: scale(1.1) rotate(5deg);
     }
 
+    /* Button */
     .btn {
       margin-top: 20px;
       padding: 12px 25px;
@@ -70,25 +109,31 @@
       text-decoration: none;
       font-size: 18px;
       border-radius: 8px;
-      transition: 0.3s;
+      transition: 0.4s;
+      box-shadow: 0px 0px 10px gold;
     }
 
     .btn:hover {
       background-color: gold;
       color: black;
+      box-shadow: 0px 0px 20px white;
     }
 
     /* Footer */
     footer {
-      background: #111;
+      background: rgba(0, 0, 0, 0.75);
+      border-top: 2px solid gold;
       text-align: center;
       padding: 15px;
+      box-shadow: 0 0 15px gold;
+      animation: glow 3s infinite alternate;
+      z-index: 10;
     }
 
     footer p {
       margin: 5px;
       font-size: 18px;
-      color: gold;
+      color: #ffdd57;
     }
 
     footer a {
@@ -97,10 +142,94 @@
       text-decoration: none;
       margin-top: 10px;
       display: inline-block;
+      transition: 0.3s;
     }
 
     footer a:hover {
-      color: #0088cc; /* Telegram blue */
+      color: #0088cc;
+      transform: scale(1.2);
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 10px gold; }
+      to { box-shadow: 0 0 30px gold; }
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+
+    .popup.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-box {
+      background: rgba(20, 20, 20, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      color: gold;
+      box-shadow: 0 0 25px gold, 0 0 50px #ffdd57 inset;
+      animation: popIn 0.8s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-box h2 {
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #ffdd57;
+    }
+
+    .popup button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background: gold;
+      color: black;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    .popup button:hover {
+      background: #ffdd57;
+      box-shadow: 0px 0px 15px white;
+    }
+
+    /* Falling money */
+    .money {
+      position: fixed;
+      top: -50px;
+      font-size: 25px;
+      color: #00ff6a;
+      animation: fall linear forwards;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    @keyframes fall {
+      from { transform: translateY(-50px) rotate(0deg); }
+      to { transform: translateY(110vh) rotate(360deg); }
     }
   </style>
 </head>
@@ -114,18 +243,17 @@
 
   <!-- Content -->
   <div class="content">
-
-    <!-- Info Para -->
     <div class="info">
 🙏भरोसा आपका ईमानदारी हमारी🙏
 
 👨‍💻𝗣𝗟𝗔𝗬 𝗢𝗡𝗟𝗜𝗡𝗘 𝗚𝗔𝗠𝗘👨‍💻
          
-         रमन भाई ऑनलाइन खाईवाल💸
+रमन भाई ऑनलाइन खाईवाल💸
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
 दिल्ली बाजार •••𝟬3:00 𝗣𝗠🔹
-श्री गणेश••••••••𝟬𝟰:40 𝗣𝗠🔹फरीदाबाद•••••••𝟬5:50 𝗣𝗠🔹
+श्री गणेश••••••••𝟬𝟰:40 𝗣𝗠🔹
+फरीदाबाद•••••••𝟬5:50 𝗣𝗠🔹
 गाजियाबाद •••••𝟬𝟴:45 𝗣𝗠🔹
 गली चोर ••••••••11:30 𝗣𝗠🔹
 दिसावर ••••••••• 03:00𝗔𝗠 🔹
@@ -136,10 +264,8 @@
 💫हरुफ रेट💫 100 के 970/-💫
     </div>
 
-    <!-- Logo Image -->
     <img src="Raman.jpg" alt="Logo">
 
-    <!-- Button -->
     <a href="https://t.me/iwi3u" class="btn">GET LINK</a>
   </div>
 
@@ -150,6 +276,42 @@
       <i class="fa-brands fa-telegram"></i>
     </a>
   </footer>
+
+  <!-- Popup -->
+  <div class="popup" id="welcomePopup">
+    <div class="popup-box">
+      <h2>🙏 स्वागत है 🙏</h2>
+      <p>भरोसा आपका, ईमानदारी हमारी</p>
+      <button onclick="closePopup()">ठीक है</button>
+    </div>
+  </div>
+
+  <script>
+    // Show popup on load
+    window.onload = function() {
+      setTimeout(() => {
+        document.getElementById('welcomePopup').classList.add('active');
+      }, 500);
+
+      // Falling money generator
+      setInterval(() => {
+        let money = document.createElement('div');
+        money.classList.add('money');
+        money.innerHTML = "💸";
+        money.style.left = Math.random() * window.innerWidth + "px";
+        money.style.animationDuration = (3 + Math.random() * 3) + "s";
+        document.body.appendChild(money);
+
+        setTimeout(() => {
+          money.remove();
+        }, 6000);
+      }, 500);
+    };
+
+    function closePopup() {
+      document.getElementById('welcomePopup').classList.remove('active');
+    }
+  </script>
 
 </body>
 </html>
